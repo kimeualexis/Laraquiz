@@ -23,7 +23,8 @@
             </div>
             <form method="post" action="{{url('/view-question')}}">
                 @csrf
-                <h2><a class="article-title" href="/questions/{{ $question->id }}">{{ $question->title }}</a></h2>
+                <input type="hidden" name="quiz_id" value="{{ $question->id }}">
+                <h2><a class="article-title" href=""><button type="submit" class="buttontext">{{ $question->title }}</button></a></h2>
             </form>
             <p class="article-content">{{ $question->question }}</p>
 

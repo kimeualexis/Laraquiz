@@ -16,6 +16,8 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'QuestionsController@index')->name('questions-index');
 Route::post('/user-profile', 'UsersController@index')->name('user-profile');
+Route::post('/view-question', 'QuestionsController@show')->name('view-question');
+Route::post('/add-comment', 'CommentsController@index')->name('add-comment');
 
 
 /*
@@ -26,5 +28,5 @@ Route::resource('roles', RolesController);
 Route::resource('users', UsersController);
 */
 
-Route::resource('questions', 'QuestionsController');
+//Route::resource('questions', 'QuestionsController');
 

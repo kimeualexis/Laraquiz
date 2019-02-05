@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CommentsController extends Controller
 {
@@ -12,9 +14,30 @@ class CommentsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         //
+        $quiz = $request->input('quiz_id');
+        $comment = $request->input('comment');
+        $name = Auth::user()->name;
+        $user_id = Auth::user()->id;
+
+        DB::table('comments')->insert([[
+            'name'=>$name,
+            'comment'=>$comment,
+            'user_id'=>$user_id,
+            'question_id'=>$quiz,
+
+        ]]);
+
+        //return redirect('/view-question')
+
+        $questions = DB::table('questions')
+            ->join('users', 'users.id', '=', 'questions.user_id')
+            ->where('questions.id', '=', $quiz)->get();
+        $comments = DB::select("SELECT * FROM comments WHERE question_id=$quiz");
+        return view('questions.show', ['questions'=> $questions], ['comments'=> $comments]);
+
     }
 
     /**

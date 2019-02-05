@@ -57,15 +57,21 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function show(Question $question)
+    public function show(Request $request)
     {
+     /*
      $question = Question::find($question-> id);
      return view('questions.show', ['question'=> $question]);
-        /*
+     */
+
+        //$question = DB::select("SELECT * FROM questions WHERE id=$quiz");
         $quiz = $request->input('quiz_id');
-        $question = DB::select("SELECT * FROM questions WHERE id=$quiz");
-        return view('questions.show', ['question'=> $question]);
-        */
+        $questions = DB::table('questions')
+            ->join('users', 'users.id', '=', 'questions.user_id')
+            ->where('questions.id', '=', $quiz)->get();
+        $comments = DB::select("SELECT * FROM comments WHERE question_id=$quiz");
+        return view('questions.show', ['questions'=> $questions], ['comments'=> $comments]);
+
     }
 
     /**
