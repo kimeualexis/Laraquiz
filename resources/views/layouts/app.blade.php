@@ -73,7 +73,7 @@
         </nav>
 
         <main class="py-4">
-            <div class="container-fluid" style="margin-top: -18px;">
+            <div class="container" style="margin-top: -18px;">
             @yield('content')
             </div>
         </main>
