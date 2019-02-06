@@ -95,6 +95,7 @@
                     </div>
 
                     <table class="table table-hover">
+                        <h3 class="text-primary text-center">Messages</h3>
                     @foreach($messages as $message)
                         @if(empty($message->status))
                     <tr class="unread">
