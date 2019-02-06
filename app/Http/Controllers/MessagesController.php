@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
+use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use DateTime;
 
-class UsersController extends Controller
+
+class MessagesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,20 +18,22 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        /*
-        $user = User::find($user-> id);
-        return view('users.index', ['user'=> $user]);
-        */
+        //
 
-        $user_id = $request->input('user_id');
-        $users = DB::select("SELECT * FROM users WHERE id=$user_id");
+        $name = Auth::user()->name;
+        $user_id = Auth::user()->id;
+        $message = $request->input('message');
+        $recipient_id = $request->input('recepient_id');
+        $created_at = date('Y-m-d H:i:s');
 
-        $questions = DB::table('users')
-            ->join('questions', 'users.id', '=', 'questions.user_id')
-            ->select('users.*', 'questions.*')->orderBy('questions.created_at', 'desc')
-            ->paginate(5);
-        return view('users.index', ['users'=> $users, 'questions'=> $questions]);
+        DB::table('messages')->insert([[
+            'name'=>$name,
+            'message'=>$message,
+            'user_id'=>$user_id,
+            'recipient_id'=>$recipient_id,
+            'created_at'=>$created_at
 
+        ]]);
     }
 
     /**
@@ -55,21 +60,25 @@ class UsersController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Message $message)
     {
         //
+        $user_id = Auth::user()->id;
+        $users = DB::select("SELECT * FROM users WHERE id=$user_id");
+        $messages = DB::select("SELECT * FROM messages WHERE recipient_id=$user_id ORDER BY created_at DESC");
+        return view('users.messages', ['messages'=> $messages, 'users'=> $users]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Message $message)
     {
         //
     }
@@ -78,10 +87,10 @@ class UsersController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Message $message)
     {
         //
     }
@@ -89,10 +98,10 @@ class UsersController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param  \App\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Message $message)
     {
         //
     }

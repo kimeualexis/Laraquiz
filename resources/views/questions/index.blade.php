@@ -38,6 +38,5 @@
     @endforeach
 
     <div style="padding-left: 40%">
-        {!! $questions->render() !!}
     </div>
 @endsection

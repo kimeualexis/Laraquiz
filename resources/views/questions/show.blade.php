@@ -52,14 +52,13 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                         </div>
-                        <h4 class="modal-title text-primary">Comment</h4>
+                        <h4 class="modal-title text-primary" style="padding-left: 21px;">Comment</h4>
                         <div class="modal-body">
                             <form class="form-horizontal" action="{{ url('/add-comment') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
                                 <div class="form-group">
-                                    <label class="control-label">Comment</label>
-                                    <textarea rows="5" class="form-control" name="comment" required ></textarea>
+                                    <textarea rows="7" class="form-control" name="comment" required ></textarea>
                                 </div>
 
                                 <div class="form-group" style="padding: 8px;">

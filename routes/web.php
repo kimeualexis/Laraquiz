@@ -18,6 +18,8 @@ Route::get('/', 'QuestionsController@index')->name('questions-index');
 Route::post('/user-profile', 'UsersController@index')->name('user-profile');
 Route::post('/view-question', 'QuestionsController@show')->name('view-question');
 Route::post('/add-comment', 'CommentsController@index')->name('add-comment');
+Route::post('/send-message', 'MessagesController@index')->name('send-message');
+Route::get('/view-messages', 'MessagesController@show')->name('view-message');
 
 
 /*

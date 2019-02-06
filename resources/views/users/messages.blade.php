@@ -32,37 +32,6 @@
                     </div>
 
 
-                    <!-- Modal -->
-                    <div id="myModal" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-lg">
-
-                            <!-- Modal content-->
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h4 class="modal-title text-primary" style="padding-left: 21px;">Message</h4>
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                </div>
-                                <div class="modal-body">
-
-                                    <form class="form-horizontal" action="{{ url('/send-message') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <input type="hidden" name="recepient_id" value="{{ $user->id }}">
-                                        <div class="form-group">
-                                            <textarea rows="7" class="form-control" name="message" required ></textarea>
-                                        </div>
-
-                                        <div class="form-group" style="padding: 8px;">
-                                            <button type="submit" class="btn btn-success">Send</button>
-                                        </div>
-
-                                    </form>
-
-                                </div>
-
-                            </div>
-
-                        </div>
-                    </div>
 
                 @endforeach
 
@@ -112,25 +81,46 @@
 
         <div class="col-sm-10">
             <br>
-            @foreach($questions as $question)
-                <article class="media content-section">
-                    <a class="mr-2" href=""><img class="rounded-circle article-img" src="{{ $question->profpic }}"></a>
-                    <div class="media-body">
-                        <div class="article-metadata">
-                            <small class="text-muted">Created: {{ $question->created_at }}</small>
-                        </div>
-                        <h2><a class="article-title" href=""><button type="submit" class="buttontext">{{ $question->title }}</button></a></h2>
-                        <p class="article-content">{{ $question->question }}</p>
 
+            <article class="media content-section">
 
-                        <div class="quiz-icons">
-                            <i class="fa fa-envelope-o"></i>
-                            <i class="fa fa-thumbs-up"></i>
-                        </div>
+                <div class="media-body">
+                    <div class="article">
+
+                        <form method="post" action="">
+                            @csrf
+                            <input type="hidden" name="user_id" value="">
+                        </form>
+
                     </div>
 
-                </article>
-        @endforeach
+                    <table class="table table-hover">
+                    @foreach($messages as $message)
+                        @if(empty($message->status))
+                    <tr class="unread">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="view-message "><a href="">{{ $message->message }}</a></td>
+                        <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        <td class="view-message  text-right">{{ $message->created_at }}</td>
+                    </tr>
+                        @else
+                    <tr class="read">
+                        <td class="inbox-small-cells">
+                            <input type="checkbox" class="mail-checkbox">
+                        </td>
+                        <td class="view-message "><a href="">Y{{ $message->message }}</a></td>
+                        <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
+                        <td class="view-message  text-right">{{ $message->created_at }}</td>
+                    </tr>
+                        @endif
+                     @endforeach
+                    </table>
+
+                </div>
+
+            </article>
 
 
 
