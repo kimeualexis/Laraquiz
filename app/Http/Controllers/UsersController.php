@@ -58,9 +58,17 @@ class UsersController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
         //
+
+        $users = DB::select("SELECT * FROM users WHERE id=$id");
+
+        $questions = DB::table('users')
+            ->join('questions', 'users.id', '=', 'questions.user_id')
+            ->select('users.*', 'questions.*')->orderBy('questions.created_at', 'desc')
+            ->paginate(5);
+        return view('users.index', ['users'=> $users, 'questions'=> $questions]);
     }
 
     /**

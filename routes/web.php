@@ -22,7 +22,8 @@ Route::post('/send-message', 'MessagesController@index')->name('send-message');
 Route::get('/view-messages', 'MessagesController@show')->name('view-message');
 Route::post('/ask-question', 'QuestionsController@create')->name('ask-question');
 Route::post('/profile-update', 'UsersController@update')->name('profile-update');
-
+Route::get('user-profile/{id}', 'UsersController@show')->name('user-profile');
+Route::get('read-message/{id}', 'MessagesController@read')->name('read-message');
 
 /*
 

@@ -34,6 +34,7 @@ class MessagesController extends Controller
             'created_at'=>$created_at
 
         ]]);
+        return redirect('/home');
     }
 
     /**
@@ -105,4 +106,19 @@ class MessagesController extends Controller
     {
         //
     }
+
+    public function read($id){
+
+        $message = DB::select("SELECT * FROM messages WHERE id=$id");
+        DB::update("UPDATE messages SET status=? WHERE id=?", [1, $id]);
+
+        $users = DB::select("SELECT recipient_id FROM messages WHERE id=$id");
+        foreach($users as $user){
+        $recipient_id = $user->recipient_id;
+        }
+        $users = DB::select("SELECT * FROM users WHERE id=$recipient_id");
+        return view('users.read-message', ['message'=> $message, 'users'=>$users]);
+    }
+
+
 }
