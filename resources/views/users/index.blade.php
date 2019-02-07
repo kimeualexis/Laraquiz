@@ -104,6 +104,7 @@
             <p class="">Status</p>
             <p class="">Website</p>
             @if(Auth::user()->id==$user->id)
+                <p class=""><a href="{{ url('/profile-update') }}">Update profile</a> </p>
                 <p class=""><a href="{{ url('/view-messages') }}">Messages</a> </p>
             @else
                 <p class=""><a href="" data-toggle="modal" data-target="#myModal">Message {{ $user->name }}</a> </p>

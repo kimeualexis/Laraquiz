@@ -41,9 +41,6 @@
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
                         @guest
-                            <li class="nav-item">
-                                <a class="nav-link btn btn-outline-secondary" href="">Add Question</a>
-                            </li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
@@ -55,6 +52,50 @@
                                 </li>
                             @endif
                         @else
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="" data-toggle="modal" data-target="#quizModal">Add Question</a>
+                            </li>
+
+
+                            <!-- Modal -->
+                            <div id="quizModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-lg">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-primary" style="padding-left: 21px;">Question</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" action="{{ url('/ask-question') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+
+                                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
+                                                <div class="form-group">
+                                                    <label class="">Title:</label>
+                                                    <input type="text" class="form-control col-md-6" name="title" required />
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="">Question:</label>
+                                                    <textarea rows="7" class="form-control" name="question" required ></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
+
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
@@ -79,10 +120,16 @@
         </nav>
 
         <main class="py-4">
-            <div class="container" style="margin-top: -18px;">
+            <div class="container" style="padding-top: 40px;">
+
             @yield('content')
             </div>
         </main>
     </div>
+
+
+
+
+
 </body>
 </html>

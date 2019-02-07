@@ -20,6 +20,8 @@ Route::post('/view-question', 'QuestionsController@show')->name('view-question')
 Route::post('/add-comment', 'CommentsController@index')->name('add-comment');
 Route::post('/send-message', 'MessagesController@index')->name('send-message');
 Route::get('/view-messages', 'MessagesController@show')->name('view-message');
+Route::post('/ask-question', 'QuestionsController@create')->name('ask-question');
+Route::post('/profile-update', 'UsersController@update')->name('profile-update');
 
 
 /*

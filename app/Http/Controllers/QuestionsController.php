@@ -35,9 +35,23 @@ class QuestionsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         //
+        $user_id = $request->input('user_id');
+        $title = $request->input('title');
+        $question = $request->input('question');
+        $created_at = date('Y-m-d H:i:s');
+
+        DB::table('questions')->insert([[
+            'user_id'=>$user_id,
+            'title'=>$title,
+            'question'=>$question,
+            'created_at'=>$created_at
+
+
+        ]]);
+
     }
 
     /**

@@ -96,12 +96,15 @@
 
                     <table class="table table-hover">
                         <h3 class="text-primary text-center">Messages</h3>
+
+                        <tr><thead><th>Select</th><th>Sender</th><th>Message</th><th>Attachment</th><th style="padding-left: 5%;">Date</th></thead></tr>
                     @foreach($messages as $message)
                         @if(empty($message->status))
                     <tr class="unread">
                         <td class="inbox-small-cells">
                             <input type="checkbox" class="mail-checkbox">
                         </td>
+                        <td class="view-message "><a href="">{{ $message->name }}</a></td>
                         <td class="view-message "><a href="">{{ $message->message }}</a></td>
                         <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
                         <td class="view-message  text-right">{{ $message->created_at }}</td>
@@ -111,7 +114,8 @@
                         <td class="inbox-small-cells">
                             <input type="checkbox" class="mail-checkbox">
                         </td>
-                        <td class="view-message "><a href="">Y{{ $message->message }}</a></td>
+                        <td class="view-message "><a href="">{{ $message->name }}</a></td>
+                        <td class="view-message "><a href="">{{ $message->message }}</a></td>
                         <td class="view-message  inbox-small-cells"><i class="fa fa-paperclip"></i></td>
                         <td class="view-message  text-right">{{ $message->created_at }}</td>
                     </tr>
