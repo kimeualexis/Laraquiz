@@ -69,11 +69,13 @@
 
         <div class="col-sm-2">
             <br>
-            <p class="">{{ $user->name }}</p>
-            <p class="">Status</p>
-            <p class="">Website</p>
+            <i class="fa fa-user">&nbsp;{{ $user->name }}</i>
+            <i class="fa fa-book">&nbsp;{{ $user->status }}</i>
+            <a href="{{ $user->website }}"> <i class="fa fa-link">&nbsp;{{ $user->website }}</i></a>
+
             @if(Auth::user()->id==$user->id)
-                <p class=""><a href="{{ url('/view-messages') }}">Messages</a> </p>
+                <a href="" data-toggle="modal" data-target="#profileModal"><i class="fa fa-pencil">&nbsp;Update profile</i></a>
+                <a href="{{ url('/view-messages') }}"><i class="fa fa-envelope">&nbsp; Messages</i></a> </p>
             @else
                 <p class=""><a href="" data-toggle="modal" data-target="#myModal">Message {{ $user->name }}</a> </p>
             @endif

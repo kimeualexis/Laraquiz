@@ -106,6 +106,7 @@ class UsersController extends Controller
 
         $username=$request->input('username');
         $status=$request->input('status');
+        $website=$request->input('website');
 
         $prof_pic="/uploads"."/".$request->input('prof-pic');
 
@@ -119,7 +120,7 @@ class UsersController extends Controller
             //getting user id
             $user_id=Auth::user()->id;
             //upating user table
-            DB::update("UPDATE users SET name = ?, status = ? , profpic = ? WHERE id = ?",[$username,$status,$url,$user_id]);
+            DB::update("UPDATE users SET name = ?, status = ? , profpic = ?, website = ? WHERE id = ?",[$username,$status,$url,$website,$user_id]);
 
         }
 

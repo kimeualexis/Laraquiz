@@ -66,16 +66,17 @@
         </div>
     </div>
     <!-- code end -->
-    <div class="row">
+    <section class="row">
 
         <div class="col-sm-2">
             <br>
-            <p class="">{{ $user->name }}</p>
-            <p class="">Status</p>
-            <p class="">Website</p>
+            <i class="fa fa-user">&nbsp;{{ $user->name }}</i>
+            <i class="fa fa-book">&nbsp;{{ $user->status }}</i>
+            <a href="{{ $user->website }}"> <i class="fa fa-link">&nbsp;{{ $user->website }}</i></a>
+
             @if(Auth::user()->id==$user->id)
-                <p class=""><a href="{{ url('/profile-update') }}">Update profile</a> </p>
-                <p class=""><a href="{{ url('/view-messages') }}">Messages</a> </p>
+                <a href="" data-toggle="modal" data-target="#profileModal"><i class="fa fa-pencil">&nbsp;Update profile</i></a>
+                <a href="{{ url('/view-messages') }}"><i class="fa fa-envelope">&nbsp; Messages</i></a> </p>
             @else
                 <p class=""><a href="" data-toggle="modal" data-target="#myModal"> {{ $user->name }}</a> </p>
             @endif
@@ -86,48 +87,52 @@
 
 
             <section id="">
-                <section class="">
                     <!-- page start-->
-                    <div class="row mt">
+                    <tr class="row mt">
                         <div class="col-sm-12">
                             <section class="panel">
-                                <div class="panel-body ">
-                                    <div class="mail-header row">
-                                        <div class="col-md-8">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="compose-btn pull-right">
-                                                <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="mail-sender">
+                                <td class="panel-body ">
+
+
                                         <div class="row">
+                                            <div class="col-sm-12">
+                                            <table class="table">
                                             @foreach($message as $sms)
-                                            <div class="col-md-8">
+                                                <tr>
                                                 <form method="post" action="{{url('/user-profile')}}">
                                                     @csrf
                                                     <input type="hidden" name="user_id" value="{{ $sms->user_id }}">
-                                                    <a class="mr-2" href=""><button type="submit" class="buttontext">{{ $sms->name }}</button></a>
+                                                    <td><a class="mr-2" href=""><button type="submit" class="buttontext">{{ $sms->name }}</button></a></td>
                                                 </form>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <p class="date">{{ $sms->created_at }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
+
+                                    <td>
                                     <div class="view-mail">
                                         <p>{{ $sms->message }}</p>
 
                                     </div>
+                                    </td>
 
+                                    <td>
+                                        <div class="col-md-4">
+                                            <p class="date">{{ $sms->created_at }}</p>
+                                        </div>
+                                    </td>
+
+                                    <td>
                                     <div class="compose-btn pull-left">
                                         <a href="" data-toggle="modal" data-target="#myModal" class="btn btn-sm btn-theme"><i class="fa fa-reply"></i> Reply</a>
+                                    </div>
+                                    </td>
+                                    <td>
+                                    <div class="compose-btn pull-right" style="float: right;">
+                                    <button class="btn btn-sm tooltips" data-original-title="Trash" data-toggle="tooltip" data-placement="top" title=""><i class="fa fa-trash-o"></i></button>
 
                                     </div>
-                                </div>
-                            </section>
-                        </div>
+                                </td>
+                                        </tr>
+                                    </table>
+                                            </div>
+
 
 
                         <!-- Modal -->
@@ -164,19 +169,11 @@
 
 
                         @endforeach
-                    </div>
-                </section>
+                                        </div>
+                                </div>
+                            </section>
+
                 <!-- /wrapper -->
-            </section>
-
-
-
-
-
-
-
-        </div>
-    </div>
 
 @endsection
 

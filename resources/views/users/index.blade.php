@@ -100,12 +100,13 @@
 
         <div class="col-sm-2">
             <br>
-            <p class="">{{ $user->name }}</p>
-            <p class="">Status</p>
-            <p class="">Website</p>
+            <i class="fa fa-user">&nbsp;{{ $user->name }}</i>
+            <i class="fa fa-book">&nbsp;{{ $user->status }}</i>
+            <a href="{{ $user->website }}"> <i class="fa fa-link">&nbsp;{{ $user->website }}</i></a>
+
             @if(Auth::user()->id==$user->id)
-                <p class=""><a href="" data-toggle="modal" data-target="#profileModal">Update profile</a> </p>
-                <p class=""><a href="{{ url('/view-messages') }}">Messages</a> </p>
+                <a href="" data-toggle="modal" data-target="#profileModal"><i class="fa fa-pencil">&nbsp;Update profile</i></a>
+                <a href="{{ url('/view-messages') }}"><i class="fa fa-envelope">&nbsp; Messages</i></a> </p>
 
 
                 <!-- Modal -->
@@ -125,7 +126,7 @@
 
                                     <div class="form-group" style="padding: 8px;">
                                         <label class="control-label">Profile pic</label>
-                                        <input type="file"  name="prof_pic" value="" required />
+                                        <input type="file"  name="prof_pic" value="{{ Auth::user()->profpic }}" required />
                                     </div>
 
                                     <div class="form-group" style="padding: 8px;">
@@ -136,6 +137,11 @@
                                     <div class="form-group" style="padding: 8px;">
                                         <label class="control-label">Status</label>
                                         <textarea rows="5" class="form-control" name="status" required > {{ Auth::user()->status }}</textarea>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label">Website</label>
+                                        <input type="text" class="form-control" name="website" value="{{ Auth::user()->website }}">
                                     </div>
 
                                     <div class="form-group" style="padding: 8px;">
@@ -152,7 +158,7 @@
 
 
             @else
-                <p class=""><a href="" data-toggle="modal" data-target="#myModal">Message {{ $user->name }}</a> </p>
+                <a href="" data-toggle="modal" data-target="#myModal"><i class="fa fa-envelope"></i>Message</a>
             @endif
         </div>
 
