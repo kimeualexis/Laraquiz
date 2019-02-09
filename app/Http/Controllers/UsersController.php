@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Auth;
 
 class UsersController extends Controller
 {
@@ -92,6 +95,39 @@ class UsersController extends Controller
     public function update(Request $request, User $user)
     {
         //
+
+        $this->validate($request,[
+            'prof_pic'=>'required |image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'username'=>'required',
+            'status'=>'required',
+
+        ]);
+
+
+        $username=$request->input('username');
+        $status=$request->input('status');
+
+        $prof_pic="/uploads"."/".$request->input('prof-pic');
+
+        //uploading image to public/uploads  folder
+        if(Input::hasFile('prof_pic')){
+            $file= Input::file('prof_pic');
+            $file->move(public_path().'/uploads', $file->getClientOriginalName());
+            $url=URL::to("/") . '/uploads'.'/'. $file->getClientOriginalName();
+
+
+            //getting user id
+            $user_id=Auth::user()->id;
+            //upating user table
+            DB::update("UPDATE users SET name = ?, status = ? , profpic = ? WHERE id = ?",[$username,$status,$url,$user_id]);
+
+        }
+
+
+
+
+        return redirect('/home')->with('response','Profile updated successfully!');
+
     }
 
     /**

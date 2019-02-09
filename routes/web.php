@@ -24,7 +24,8 @@ Route::post('/ask-question', 'QuestionsController@create')->name('ask-question')
 Route::post('/profile-update', 'UsersController@update')->name('profile-update');
 Route::get('user-profile/{id}', 'UsersController@show')->name('user-profile');
 Route::get('read-message/{id}', 'MessagesController@read')->name('read-message');
-
+Route::post('/update-question', 'QuestionsController@update')->name('update-question');
+Route::post('delete-question/{id}', 'QuestionsController@destroy')->name('delete-question');
 /*
 
 Route::resource('questions', QuestionsController);

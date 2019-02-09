@@ -104,8 +104,53 @@
             <p class="">Status</p>
             <p class="">Website</p>
             @if(Auth::user()->id==$user->id)
-                <p class=""><a href="{{ url('/profile-update') }}">Update profile</a> </p>
+                <p class=""><a href="" data-toggle="modal" data-target="#profileModal">Update profile</a> </p>
                 <p class=""><a href="{{ url('/view-messages') }}">Messages</a> </p>
+
+
+                <!-- Modal -->
+                <div id="profileModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title text-primary">Update Profile</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div class="modal-body">
+                                <form class="form-horizontal" action="{{ url('/profile-update') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <!-- <input type="hidden" name="_method" value="PUT">-->
+
+                                    <div class="form-group" style="padding: 8px;">
+                                        <label class="control-label">Profile pic</label>
+                                        <input type="file"  name="prof_pic" value="" required />
+                                    </div>
+
+                                    <div class="form-group" style="padding: 8px;">
+                                        <label class="control-label">Username</label>
+                                        <input type="text" class="form-control" name="username" value="{{ Auth::user()->name }}" required />
+                                    </div>
+
+                                    <div class="form-group" style="padding: 8px;">
+                                        <label class="control-label">Status</label>
+                                        <textarea rows="5" class="form-control" name="status" required > {{ Auth::user()->status }}</textarea>
+                                    </div>
+
+                                    <div class="form-group" style="padding: 8px;">
+                                        <button type="submit" class="btn btn-success">Update</button>
+                                    </div>
+
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+
             @else
                 <p class=""><a href="" data-toggle="modal" data-target="#myModal">Message {{ $user->name }}</a> </p>
             @endif
@@ -118,9 +163,20 @@
                     <a class="mr-2" href=""><img class="rounded-circle article-img" src="{{ $question->profpic }}"></a>
                     <div class="media-body">
                         <div class="article-metadata">
+                            <form method="post" action="{{url('/user-profile')}}">
+                                @csrf
+                                <input type="hidden" name="user_id" value="{{ $question->user_id }}">
+                                <a class="mr-2" href=""><button type="submit" class="buttontext">{{ $question->name }}</button></a>
+                            </form>
+
                             <small class="text-muted">Created: {{ $question->created_at }}</small>
                         </div>
-                        <h2><a class="article-title" href=""><button type="submit" class="buttontext">{{ $question->title }}</button></a></h2>
+
+                        <form method="post" action="{{url('/view-question')}}">
+                            @csrf
+                            <input type="hidden" name="quiz_id" value="{{ $question->id }}">
+                            <h2><a class="article-title" href=""><button type="submit" class="buttontext">{{ $question->title }}</button></a></h2>
+                        </form>
                         <p class="article-content">{{ $question->question }}</p>
 
 

@@ -97,6 +97,10 @@ class QuestionsController extends Controller
     public function edit(Question $question)
     {
         //
+        /*
+        $question = Question::find($question->id);
+        return view('', ['question'=>$question]);
+        */
     }
 
     /**
@@ -109,7 +113,15 @@ class QuestionsController extends Controller
     public function update(Request $request, Question $question)
     {
         //
+        $quiz_id = $request->input('quiz_id');
+        $title = $request->input('title');
+        $question = $request->input('question');
+
+        DB::update("UPDATE questions set title = ?, question = ? WHERE id = ?",[$title,$question,$quiz_id]);
+        return view('home');
+
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -117,8 +129,11 @@ class QuestionsController extends Controller
      * @param  \App\Question  $question
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Question $question)
+    public function destroy(Question $question, $id)
     {
+
+        $quiz = Question::find($id);
+        $quiz->destroy();
         //
     }
 }

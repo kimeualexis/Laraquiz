@@ -12,7 +12,45 @@
                     <div class="">
                         @if(Auth::user()->id==($quiz->user_id))
                         <a class="btn btn-secondary btn-sn mt-1 mb-1" href="" data-toggle="modal" data-target="#quizUpdate">Update</a>
-                        <a class="btn btn-danger btn-sn mt-1 mb-1" href="">Delete</a>
+                        <a class="btn btn-danger btn-sn mt-1 mb-1" href='delete-question/{{ $quiz->id }}'>Delete</a>
+
+                            <!-- Modal -->
+                            <div id="quizUpdate" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-lg">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-primary" style="padding-left: 21px;">Update Question</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form-horizontal" action="{{ url('/update-question') }}" method="POST" enctype="multipart/form-data">
+                                                @csrf
+
+                                                <input type="hidden" name="quiz_id" value="{{ $quiz->id }}">
+                                                <div class="form-group">
+                                                    <label class="">Title:</label>
+                                                    <input type="text" class="form-control col-md-6" name="title" value="{{ $quiz->title }}" required />
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="">Question:</label>
+                                                    <textarea rows="7" class="form-control" name="question" required >{{ $quiz->question }}</textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <button type="submit" class="btn btn-success">Submit</button>
+                                                </div>
+
+                                            </form>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+
                         @endif
 
                         <a href="" data-toggle="modal" data-target="#myModal" class="btn btn-primary btn-sm" style="float: right;">comment</a>
@@ -47,7 +85,7 @@
 
             <!-- Modal -->
             <div id="myModal" class="modal fade" role="dialog">
-                <div class="modal-dialog">
+                <div class="modal-dialog modal-lg">
 
                     <!-- Modal content-->
                     <div class="modal-content">
@@ -77,42 +115,7 @@
 
 
 
-            <!-- Modal -->
-            <div id="quizUpdate" class="modal fade" role="dialog">
-                <div class="modal-dialog modal-lg">
 
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title text-primary" style="padding-left: 21px;">Update Question</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        </div>
-                        <div class="modal-body">
-                            <form class="form-horizontal" action="{{ url('/ask-question') }}" method="POST" enctype="multipart/form-data">
-                                @csrf
-
-                                <input type="hidden" name="user_id" value="{{ Auth::user()->id }}">
-                                <div class="form-group">
-                                    <label class="">Title:</label>
-                                    <input type="text" class="form-control col-md-6" name="title" required />
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="">Question:</label>
-                                    <textarea rows="7" class="form-control" name="question" required ></textarea>
-                                </div>
-
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-success">Submit</button>
-                                </div>
-
-                            </form>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
 
 
         </article>
