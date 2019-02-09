@@ -7,13 +7,13 @@
     <div class="row1">
 
         <!-- code start -->
+                @foreach($users as $user)
 
-        <div class="twPc-div">
-            <a class="twPc-bg twPc-block"></a>
+            <div class="twPc-div">
+            <img class="twPc-bg twPc-block" src="">
 
             <div>
 
-                @foreach($users as $user)
                     <a title="Mert S. Kaplan" href="https://twitter.com/mertskaplan" class="twPc-avatarLink">
                         @if(!empty($user->profpic))
                             <img alt="Mert S. Kaplan" src="{{ $user->profpic }}" class="twPc-avatarImg">
@@ -21,6 +21,7 @@
                             <img alt="Mert S. Kaplan" src="http://127.0.0.1:8000/uploads/default.jpg" class="twPc-avatarImg">
                         @endif
                     </a>
+
 
                     <div class="twPc-divUser">
                         <div class="twPc-divName">
@@ -95,16 +96,17 @@
 
         </div>
     </div>
-    <!-- code end -->
-    <div class="row">
 
+    <!-- code end -->
+
+        <div class="row">
         <div class="col-sm-2">
             <br>
             <i class="fa fa-user">&nbsp;{{ $user->name }}</i>
             <i class="fa fa-book">&nbsp;{{ $user->status }}</i>
             <a href="{{ $user->website }}"> <i class="fa fa-link">&nbsp;{{ $user->website }}</i></a>
 
-            @if(Auth::user()->id==$user->id)
+            @if(Auth::id()==$user->id)
                 <a href="" data-toggle="modal" data-target="#profileModal"><i class="fa fa-pencil">&nbsp;Update profile</i></a>
                 <a href="{{ url('/view-messages') }}"><i class="fa fa-envelope">&nbsp; Messages</i></a> </p>
 
@@ -128,6 +130,7 @@
                                         <label class="control-label">Profile pic</label>
                                         <input type="file"  name="prof_pic" value="{{ Auth::user()->profpic }}" required />
                                     </div>
+
 
                                     <div class="form-group" style="padding: 8px;">
                                         <label class="control-label">Username</label>
@@ -162,7 +165,7 @@
             @endif
         </div>
 
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <br>
             @foreach($questions as $question)
                 <article class="media content-section">

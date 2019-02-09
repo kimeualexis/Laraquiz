@@ -25,6 +25,7 @@ class QuestionsController extends Controller
             ->select('users.*', 'questions.*')->orderBy('questions.created_at', 'desc')
             ->paginate(5);
 
+
         return view('questions.index', ['questions'=> $questions]);
 
 

@@ -4,13 +4,12 @@
 <link href="{{ asset('css/main.css') }}" rel="stylesheet" type="text/css">
 
 @section('content')
+    <div class="col-sm-9">
     @foreach($questions as $question)
     <article class="media content-section">
-        <form method="post" action="{{url('/user-profile')}}">
             @csrf
-            <input type="hidden" name="user_id" value="{{ $question->user_id }}">
-        <a class="mr-2" href=""><button type="submit" class="buttontext"><img class="rounded-circle article-img" src="{{ $question->profpic }}"></button></a>
-        </form>
+        <a class="mr-2" href="{{ route('user-profile', $question->user_id) }}"><img class="rounded-circle article-img" src="{{ $question->profpic }}"></a>
+
             <div class="media-body">
             <div class="article-metadata">
 
@@ -32,11 +31,10 @@
                 <i class="fa fa-envelope-o"></i>
                 <i class="fa fa-thumbs-up"></i>
             </div>
+
         </div>
 
     </article>
     @endforeach
-
-    <div style="padding-left: 40%">
     </div>
 @endsection
